@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+echo "Checking and installing dependencies..."
+
+if ! command_exists docker; then
+  echo "Docker not found. Please install Docker first: https://docs.docker.com/get-docker/"
+  exit 1
+else
+  echo "docker command found, nice!"
+fi
+
+
+if ! command_exists kind; then
+  echo "Installing kind..."
+  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
+  chmod +x ./kind
+  sudo mv ./kind /usr/local/bin/kind
+else
+  echo "kind already installed!"
+fi
+
+if ! command_exists kubectl; then
+  echo "Installing kubectl, this is the cli for interacting with k8s"
+  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  chmod +x kubectl
+  sudo mv kubectl /usr/local/bin/
+else
+  echo "kubectl installed, this is the cli for interacting with k8s"
+fi
+
+if ! command_exists k9s; then
+  echo "Installing k9s, this is kubectl with flair..."
+  curl -sS https://webinstall.dev/k9s | bash
+  export PATH="/home/$(whoami)/.local/bin:$PATH"
+else
+  echo "k9s installed, stylish!"
+fi
+
+
+echo "dependencies installed, setting up cluster..."
+read -p "Enter cluster name (default: kind): " CLUSTER_NAME
+CLUSTER_NAME=${CLUSTER_NAME:-kind}
+
+sudo kind create cluster -n $CLUSTER_NAME
