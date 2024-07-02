@@ -2,9 +2,9 @@ use std::env::consts;
 
 #[derive(Debug)]
 pub struct Machine {
-    os: String,
-    family: String,
-    arch: String,
+    pub os: String,
+    pub family: String,
+    pub arch: String,
 }
 
 impl Machine {
