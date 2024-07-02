@@ -1,3 +1,5 @@
+name: fedora
+
 on:
   pull_request:
     branches:

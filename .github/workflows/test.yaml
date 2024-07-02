@@ -1,5 +1,4 @@
-
-name: test
+name: ubuntu
 
 on: 
   pull_request:
