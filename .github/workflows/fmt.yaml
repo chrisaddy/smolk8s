@@ -1,0 +1,30 @@
+name: formatter
+
+on: 
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  formatting:
+    name: Run Rust code formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt
+      - name: Formatting with rustfmt
+        run: cargo fmt --all

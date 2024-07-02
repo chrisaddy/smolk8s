@@ -1,4 +1,9 @@
 # smolk8s
+[![macos](https://github.com/chrisaddy/smolk8s/actions/workflows/test-macos.yaml/badge.svg)](https://github.com/chrisaddy/smolk8s/actions/workflows/test-macos.yaml)
+[![ubuntu](https://github.com/chrisaddy/smolk8s/actions/workflows/test.yaml/badge.svg)](https://github.com/chrisaddy/smolk8s/actions/workflows/test.yaml)
+[![windows](https://github.com/chrisaddy/smolk8s/actions/workflows/test-windows.yaml/badge.svg)](https://github.com/chrisaddy/smolk8s/actions/workflows/test-windows.yaml)
+[![fedora](https://github.com/chrisaddy/smolk8s/actions/workflows/test-fedora.yaml/badge.svg)](https://github.com/chrisaddy/smolk8s/actions/workflows/test-fedora.yaml)
+[![arch btw](https://github.com/chrisaddy/smolk8s/actions/workflows/test-arch.yaml/badge.svg)](https://github.com/chrisaddy/smolk8s/actions/workflows/test-arch.yaml)
 
 This is a super bare-bones setup of k8s just for people to get it on their systems and start messing around.
 
