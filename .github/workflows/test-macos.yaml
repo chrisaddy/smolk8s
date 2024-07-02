@@ -1,3 +1,5 @@
+name: macos
+
 on:
   pull_request:
     branches:

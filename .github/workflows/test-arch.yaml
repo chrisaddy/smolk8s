@@ -1,3 +1,5 @@
+name: Arch, btw
+
 on:
   pull_request:
     branches:
