@@ -1,7 +1,6 @@
-use clap::{Arg, Command};
-use std::env::consts;
+use clap::Command;
 
-use smolk8s::machine::Machine;
+use smolk8s::host::Machine;
 
 fn cli(machine: Machine) -> Command {
     Command::new("smolk8s")

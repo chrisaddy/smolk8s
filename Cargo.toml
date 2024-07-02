@@ -4,7 +4,6 @@ description = "super small k8s setup"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-license-file = "LICENSE"
 
 [dependencies]
 clap = "4.5.8"

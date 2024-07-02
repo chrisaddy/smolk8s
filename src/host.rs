@@ -1,12 +1,14 @@
+use std::env::consts;
+
 #[derive(Debug)]
-struct Machine {
+pub struct Machine {
     os: String,
     family: String,
     arch: String,
 }
 
 impl Machine {
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             os: consts::OS.to_string(),
             family: consts::FAMILY.to_string(),
