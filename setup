@@ -14,15 +14,6 @@ else
 fi
 
 
-if ! command_exists kind; then
-  echo "Installing kind..."
-  curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
-  chmod +x ./kind
-  sudo mv ./kind /usr/local/bin/kind
-else
-  echo "kind already installed!"
-fi
-
 if ! command_exists kubectl; then
   echo "Installing kubectl, this is the cli for interacting with k8s"
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -41,8 +32,58 @@ else
 fi
 
 
+if ! command_exists kind; then
+  echo "Installing kind..."
+  
+  OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+  ARCH=$(uname -m)
+  KIND_VERSION="v0.23.0"
+
+  case $OS in
+    linux)
+      case $ARCH in
+        x86_64)
+          curl -Lo ./kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-amd64"
+          ;;
+        aarch64)
+          curl -Lo ./kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-linux-arm64"
+          ;;
+        *)
+          echo "Unsupported architecture: $ARCH"
+          exit 1
+          ;;
+      esac
+      chmod +x ./kind
+      sudo mv ./kind /usr/local/bin/kind
+      ;;
+    darwin)
+      case $ARCH in
+        x86_64)
+          curl -Lo ./kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-darwin-amd64"
+          ;;
+        arm64)
+          curl -Lo ./kind "https://kind.sigs.k8s.io/dl/${KIND_VERSION}/kind-darwin-arm64"
+          ;;
+        *)
+          echo "Unsupported architecture: $ARCH"
+          exit 1
+          ;;
+      esac
+      chmod +x ./kind
+      sudo mv ./kind /usr/local/bin/kind
+      ;;
+    *)
+      echo "Unsupported operating system: $OS"
+      exit 1
+      ;;
+  esac
+fi
+
+
 echo "dependencies installed, setting up cluster..."
 read -p "Enter cluster name (default: kind): " CLUSTER_NAME
 CLUSTER_NAME=${CLUSTER_NAME:-kind}
 
 sudo kind create cluster -n $CLUSTER_NAME
+
+
