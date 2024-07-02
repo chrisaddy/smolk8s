@@ -1,8 +1,10 @@
 use clap::Command;
+use colored::Colorize;
 
+use smolk8s::docker::Docker;
 use smolk8s::host::Machine;
 
-fn cli(machine: Machine) -> Command {
+fn cli(machine: &Machine) -> Command {
     Command::new("smolk8s")
         .about(format!("let's get you kubing, {}", machine))
         .subcommand_required(true)
@@ -14,16 +16,38 @@ fn cli(machine: Machine) -> Command {
 }
 
 fn install_minimal() {
+    println!("{}", "checking for dependencies...\n".yellow());
     let machine = Machine::new();
-    println!("{:?}", machine);
+    let docker = Docker::new();
+    match docker.installed {
+        true => {
+            let msg = "docker installed:".to_owned();
+            println!(
+                "{}\n{}",
+                msg.green(),
+                docker.version.expect("docker version").blue()
+            )
+        }
+        false => println!(
+            "{}\n{}\n\t{}",
+            "docker not found!!!".red(),
+            "Please install Docker first:".blue(),
+            "https://docs.docker.com/get-docker/".yellow()
+        ),
+    }
 }
 
 fn main() {
     let machine = Machine::new();
-    let matches = cli(machine).get_matches();
+    let matches = cli(&machine).get_matches();
     match matches.subcommand() {
         Some(("minimal", _)) => {
-            println!("building minimal cluster");
+            println!(
+                "{} {}[{}]\n",
+                "building minimal cluster for".green(),
+                machine.os.blue(),
+                machine.arch.blue()
+            );
             install_minimal();
         }
         _ => unreachable!(),
