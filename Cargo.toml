@@ -8,4 +8,8 @@ license = "MIT"
 [dependencies]
 clap = "4.5.8"
 colored = "2.1.0"
+config = "0.14.0"
 dialoguer = { version = "0.11.0", features = ["fuzzy-matcher", "fuzzy-select"] }
+dirs = "5.0.1"
+serde = { version = "1.0.203", features = ["derive"] }
+serde_yaml = "0.9.34"

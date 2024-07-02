@@ -3,6 +3,8 @@ use colored::Colorize;
 
 use smolk8s::docker::Docker;
 use smolk8s::host::Machine;
+use smolk8s::kubectl::Kubectl;
+use smolk8s::settings::Settings;
 
 fn cli(machine: &Machine) -> Command {
     Command::new("smolk8s")
@@ -15,9 +17,8 @@ fn cli(machine: &Machine) -> Command {
         )
 }
 
-fn install_minimal() {
+fn install_minimal(machine: &Machine) {
     println!("{}", "checking for dependencies...\n".yellow());
-    let machine = Machine::new();
     let docker = Docker::new();
     match docker.installed {
         true => {
@@ -48,7 +49,7 @@ fn main() {
                 machine.os.blue(),
                 machine.arch.blue()
             );
-            install_minimal();
+            install_minimal(&machine);
         }
         _ => unreachable!(),
     }
