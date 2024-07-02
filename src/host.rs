@@ -31,7 +31,7 @@ mod tests {
     fn test_windows() {
         let machine = Machine::new();
         assert_eq!(machine.os, "windows");
-        assert_eq!(machine.family, "unix");
+        assert_eq!(machine.family, "windows");
         assert_eq!(machine.arch, "x86_64");
     }
 
